@@ -4,119 +4,54 @@ layout: help
 mirrorid: wine-builds
 ---
 
-<!-- 本 markdown 从 mirrorz-org/mirrorz-help 自动生成，如需修改，请修改 mirrorz-org/mirrorz-help 的对应部分 -->
+<!-- 本 markdown 从 tuna/mirrorz-help-ng 自动生成，如需修改，请修改其对应部分 -->
 
-# Wine builds 软件仓库镜像使用帮助
+<style>.z-help tmpl { display: none }</style>
 
-<form class="form-inline">
-<div class="form-group">
-	<label>是否使用 HTTPS</label>
-	<select id="http-select" class="form-control content-select" data-target="#content-0,#content-1,#content-2,#content-3">
-	  <option data-http_protocol="https://" selected>是</option>
-	  <option data-http_protocol="http://">否</option>
-	</select>
+<div class="z-wrap">
+    <form class="z-form z-global" onchange="form_update(null)" onsubmit="return false">
+        <div>
+            <label for="e0a5cecb">线路选择</label>
+            <select id="e0a5cecb" name="host">
+                <option selected="selected" value="{{ site.url }}">自动</option>
+                <option value="{{ site.urlv4 }}">IPv4</option>
+                <option value="{{ site.urlv6 }}">IPv6</option>
+            </select>
+        </div>
+        <div>
+            <input id="144d763c" name="_scheme" type="checkbox" checked>
+            <label for="144d763c">是否使用 HTTPS</label>
+        </div>
+        <div>
+            <input id="4659e7da" name="_sudo" type="checkbox">
+            <label for="4659e7da">是否使用 sudo</label>
+        </div>
+    </form>
 </div>
-</form>
-
-
-<form class="form-inline">
-<div class="form-group">
-	<label>是否使用 sudo</label>
-	<select id="sudo-select" class="form-control content-select" data-target="#content-0,#content-1,#content-2,#content-3">
-	  <option data-sudo="sudo " data-sudoE="sudo -E " selected>是</option>
-	  <option data-sudo="" data-sudoE="">否</option>
-	</select>
-</div>
-</form>
-
-
-
-由于上游并未提供 rsync，镜像站只同步了 ubuntu/debian 部分。
-
-首先启用 32 位架构
-
-
-
 {% raw %}
-<script id="template-0" type="x-tmpl-markup">
+<div class="z-help"><h1>Wine builds 软件仓库</h1>
+<p>由于上游并未提供 rsync，镜像站只同步了 ubuntu/debian 部分。</p>
+<p>首先启用 32 位架构</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="bash">
 {{sudo}}dpkg --add-architecture i386
-</script>
-{% endraw %}
-
-<p></p>
-
-<pre>
-<code id="content-0" class="language-bash" data-template="#template-0" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
-之后信任来自 https://dl.winehq.org/ 的公钥
-
-
-
-{% raw %}
-<script id="template-1" type="x-tmpl-markup">
+</tmpl>
+<p>之后信任来自 https://dl.winehq.org/ 的公钥</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="bash">
 {{sudo}}wget -nc -O /usr/share/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
-</script>
-{% endraw %}
+</tmpl>
+<p>新增 <code>/etc/apt/sources.list.d/winehq.list</code>，内容为</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"><div><label for="3eb0f615" title>发行版</label><select id="3eb0f615" name="release" title><option value="bookworm">Debian 12 (bookworm)</option><option value="bullseye">Debian 11 (bullseye)</option><option value="buster">Debian 10 (buster)</option><option value="jammy">Ubuntu 22.04 LTS (jammy)</option><option value="focal">Ubuntu 20.04 LTS (focal)</option><option value="bionic">Ubuntu 18.04 LTS (bionic)</option></select></div></form><pre class="z-code"></pre></div><tmpl z-input="release" z-path="/etc/apt/sources.list.d/winehq.list">
 
-<p></p>
-
-<pre>
-<code id="content-1" class="language-bash" data-template="#template-1" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
-新增 `/etc/apt/sources.list.d/winehq.list`，内容为
-
-
-
-<form class="form-inline">
-<div class="form-group">
-  <label>发行版：</label>
-    <select id="select-2-0" class="form-control content-select" data-target="#content-2">
-      <option data-os_name="debian" data-release_name="bookworm" selected>Debian 12</option>
-      <option data-os_name="debian" data-release_name="bullseye">Debian 11</option>
-      <option data-os_name="debian" data-release_name="buster">Debian 10</option>
-      <option data-os_name="ubuntu" data-release_name="jammy">Ubuntu 22.04 LTS</option>
-      <option data-os_name="ubuntu" data-release_name="focal">Ubuntu 20.04 LTS</option>
-      <option data-os_name="ubuntu" data-release_name="bionic">Ubuntu 18.04 LTS</option>
-    </select>
-</div>
-</form>
-
-{% raw %}
-<script id="template-2" type="x-tmpl-markup">
-deb [arch=amd64,i386 signed-by=/usr/share/keyrings/winehq-archive.key] {{http_protocol}}{{mirror}}/{{os_name}}/ {{release_name}} main
-</script>
-{% endraw %}
-
-<p></p>
-
-<pre>
-<code id="content-2" class="language-properties" data-template="#template-2" data-select="#http-select,#sudo-select,#select-2-0">
-</code>
-</pre>
-
-
-通过以下命令安装 winehq
-
-
-
-{% raw %}
-<script id="template-3" type="x-tmpl-markup">
+deb [arch=amd64,i386 signed-by=/usr/share/keyrings/winehq-archive.key] {{endpoint}}/{{os}}/ {{release}} main
+</tmpl>
+<p>通过以下命令安装 winehq</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="bash">
 {{sudo}}apt update
 {{sudo}}apt install --install-recommends winehq-stable
-</script>
+</tmpl><script id="z-config" type="application/x-mirrorz-help">eyJfIjogIldpbmUgYnVpbGRzIFx1OGY2Zlx1NGVmNlx1NGVkM1x1NWU5MyIsICJibG9jayI6IFsid2luZS1idWlsZHMiXSwgImlucHV0IjogeyJyZWxlYXNlIjogeyJfIjogIlx1NTNkMVx1ODg0Y1x1NzI0OCIsICJvcHRpb24iOiB7ImJvb2t3b3JtIjogeyJfIjogIkRlYmlhbiAxMiAoYm9va3dvcm0pIiwgIm9zIjogImRlYmlhbiJ9LCAiYnVsbHNleWUiOiB7Il8iOiAiRGViaWFuIDExIChidWxsc2V5ZSkiLCAib3MiOiAiZGViaWFuIn0sICJidXN0ZXIiOiB7Il8iOiAiRGViaWFuIDEwIChidXN0ZXIpIiwgIm9zIjogImRlYmlhbiJ9LCAiamFtbXkiOiB7Il8iOiAiVWJ1bnR1IDIyLjA0IExUUyAoamFtbXkpIiwgIm9zIjogInVidW50dSJ9LCAiZm9jYWwiOiB7Il8iOiAiVWJ1bnR1IDIwLjA0IExUUyAoZm9jYWwpIiwgIm9zIjogInVidW50dSJ9LCAiYmlvbmljIjogeyJfIjogIlVidW50dSAxOC4wNCBMVFMgKGJpb25pYykiLCAib3MiOiAidWJ1bnR1In19fX0sICJuYW1lIjogIndpbmUtYnVpbGRzIn0=</script>
+</div>
+
 {% endraw %}
 
-<p></p>
-
-<pre>
-<code id="content-3" class="language-bash" data-template="#template-3" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
+<script src="/static/js/mustache.js?{{ site.data['hash'] }}"></script>
+<script src="/static/js/zdocs.js?{{ site.data['hash'] }}"></script>

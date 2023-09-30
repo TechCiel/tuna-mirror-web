@@ -4,152 +4,67 @@ layout: help
 mirrorid: gitlab-runner
 ---
 
-<!-- 本 markdown 从 mirrorz-org/mirrorz-help 自动生成，如需修改，请修改 mirrorz-org/mirrorz-help 的对应部分 -->
+<!-- 本 markdown 从 tuna/mirrorz-help-ng 自动生成，如需修改，请修改其对应部分 -->
 
-# GitLab Runner 软件仓库镜像使用帮助
+<style>.z-help tmpl { display: none }</style>
 
-<form class="form-inline">
-<div class="form-group">
-	<label>是否使用 HTTPS</label>
-	<select id="http-select" class="form-control content-select" data-target="#content-0,#content-1,#content-2,#content-3,#content-4">
-	  <option data-http_protocol="https://" selected>是</option>
-	  <option data-http_protocol="http://">否</option>
-	</select>
+<div class="z-wrap">
+    <form class="z-form z-global" onchange="form_update(null)" onsubmit="return false">
+        <div>
+            <label for="e0a5cecb">线路选择</label>
+            <select id="e0a5cecb" name="host">
+                <option selected="selected" value="{{ site.url }}">自动</option>
+                <option value="{{ site.urlv4 }}">IPv4</option>
+                <option value="{{ site.urlv6 }}">IPv6</option>
+            </select>
+        </div>
+        <div>
+            <input id="144d763c" name="_scheme" type="checkbox" checked>
+            <label for="144d763c">是否使用 HTTPS</label>
+        </div>
+        <div>
+            <input id="4659e7da" name="_sudo" type="checkbox">
+            <label for="4659e7da">是否使用 sudo</label>
+        </div>
+    </form>
 </div>
-</form>
-
-
-<form class="form-inline">
-<div class="form-group">
-	<label>是否使用 sudo</label>
-	<select id="sudo-select" class="form-control content-select" data-target="#content-0,#content-1,#content-2,#content-3,#content-4">
-	  <option data-sudo="sudo " data-sudoE="sudo -E " selected>是</option>
-	  <option data-sudo="" data-sudoE="">否</option>
-	</select>
-</div>
-</form>
-
-
-
-**注意：gitlab-runner 镜像支持 x86-64 和 ARM64(aarch64) 架构**
-
-### Debian/Ubuntu 用户
-
-首先信任 GitLab 的 GPG 公钥：
-
-
-
 {% raw %}
-<script id="template-0" type="x-tmpl-markup">
-curl https://packages.gitlab.com/gpg.key 2> /dev/null | {{sudo}}apt-key add - &>/dev/null
-</script>
-{% endraw %}
-
-<p></p>
-
-<pre>
-<code id="content-0" class="language-bash" data-template="#template-0" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
-再选择你的 Debian/Ubuntu 版本，文本框中内容写进 `/etc/apt/sources.list.d/gitlab-runner.list`
-
-
-
-<form class="form-inline">
-<div class="form-group">
-  <label>发行版：</label>
-    <select id="select-1-0" class="form-control content-select" data-target="#content-1">
-      <option data-os_name="debian" data-release_name="bullseye" selected>Debian 11</option>
-      <option data-os_name="debian" data-release_name="buster">Debian 10</option>
-      <option data-os_name="debian" data-release_name="stretch">Debian 9</option>
-      <option data-os_name="debian" data-release_name="jessie">Debian 8</option>
-      <option data-os_name="ubuntu" data-release_name="jammy">Ubuntu 22.04 LTS</option>
-      <option data-os_name="ubuntu" data-release_name="focal">Ubuntu 20.04 LTS</option>
-      <option data-os_name="ubuntu" data-release_name="bionic">Ubuntu 18.04 LTS</option>
-      <option data-os_name="ubuntu" data-release_name="xenial">Ubuntu 16.04 LTS</option>
-    </select>
-</div>
-</form>
-
-{% raw %}
-<script id="template-1" type="x-tmpl-markup">
-deb {{http_protocol}}{{mirror}}/{{os_name}} {{release_name}} main
-</script>
-{% endraw %}
-
-<p></p>
-
-<pre>
-<code id="content-1" class="language-properties" data-template="#template-1" data-select="#http-select,#sudo-select,#select-1-0">
-</code>
-</pre>
-
-
-
-安装 gitlab-runner:
-
-
-
-{% raw %}
-<script id="template-2" type="x-tmpl-markup">
+<div class="z-help"><h1>GitLab Runner 软件仓库</h1>
+<h2>收录范围</h2>
+<p>gitlab-runner 镜像支持 x86-64 和 ARM64(aarch64) 架构。</p>
+<h3>Debian/Ubuntu 用户</h3>
+<p>首先信任 GitLab 的 GPG 公钥：</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="bash">
+curl https://packages.gitlab.com/gpg.key 2&gt; /dev/null | {{sudo}}apt-key add - &amp;&gt;/dev/null
+</tmpl>
+<p>再选择你的 Debian/Ubuntu 版本，将下方内容写入 <code>/etc/apt/sources.list.d/gitlab-runner.list</code></p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"><div><label for="c04a5be1" title>操作系统版本</label><select id="c04a5be1" name="release" title><option value="bullseye">Debian 11 (bullseye)</option><option value="buster">Debian 10 (buster)</option><option value="stretch">Debian 9 (stretch) (EOL)</option><option value="jessie">Debian 8 (jessie) (EOL)</option><option value="focal">Ubuntu 20.04 LTS (focal)</option><option value="bionic">Ubuntu 18.04 LTS (bionic)</option><option value="xenial">Ubuntu 16.04 LTS (xenial) (EOL)</option></select></div></form><pre class="z-code"></pre></div><tmpl z-input="release" z-path="/etc/apt/sources.list.d/gitlab-runner.list">
+deb {{endpoint}}/{{os}} {{release}} main
+</tmpl>
+<p>安装 gitlab-runner:</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="bash">
 {{sudo}}apt-get update
 {{sudo}}apt-get install gitlab-runner
-</script>
-{% endraw %}
-
-<p></p>
-
-<pre>
-<code id="content-2" class="language-bash" data-template="#template-2" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
-### CentOS/RHEL
-
-新建 `/etc/yum.repos.d/gitlab-runner.repo`，内容为
-
-
-
-
-{% raw %}
-<script id="template-3" type="x-tmpl-markup">
+</tmpl>
+<h3>CentOS/RHEL</h3>
+<p>新建 <code>/etc/yum.repos.d/gitlab-runner.repo</code>，内容为</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="ini" z-path="/etc/yum.repos.d/gitlab-runner.repo">
 [gitlab-runner]
 name=gitlab-runner
-baseurl={{http_protocol}}{{mirror}}/yum/el$releasever-$basearch/
+baseurl={{endpoint}}/yum/el$releasever-$basearch/
 repo_gpgcheck=0
 gpgcheck=0
 enabled=1
 gpgkey=https://packages.gitlab.com/gpg.key
-</script>
-{% endraw %}
-
-<p></p>
-
-<pre>
-<code id="content-3" class="language-ini" data-template="#template-3" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
-再执行
-
-
-
-{% raw %}
-<script id="template-4" type="x-tmpl-markup">
+</tmpl>
+<p>再执行</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"></form><pre class="z-code"></pre></div><tmpl z-lang="bash">
 {{sudo}}yum makecache
 {{sudo}}yum install gitlab-runner
-</script>
+</tmpl><script id="z-config" type="application/x-mirrorz-help">eyJfIjogIkdpdExhYiBSdW5uZXIgXHU4ZjZmXHU0ZWY2XHU0ZWQzXHU1ZTkzIiwgImJsb2NrIjogWyJjb3ZlciIsICJkZWIiLCAicnBtIl0sICJpbnB1dCI6IHsicmVsZWFzZSI6IHsiXyI6ICJcdTY0Y2RcdTRmNWNcdTdjZmJcdTdlZGZcdTcyNDhcdTY3MmMiLCAib3B0aW9uIjogeyJidWxsc2V5ZSI6IHsiXyI6ICJEZWJpYW4gMTEgKGJ1bGxzZXllKSIsICJvcyI6ICJkZWJpYW4ifSwgImJ1c3RlciI6IHsiXyI6ICJEZWJpYW4gMTAgKGJ1c3RlcikiLCAib3MiOiAiZGViaWFuIn0sICJzdHJldGNoIjogeyJfIjogIkRlYmlhbiA5IChzdHJldGNoKSAoRU9MKSIsICJvcyI6ICJkZWJpYW4ifSwgImplc3NpZSI6IHsiXyI6ICJEZWJpYW4gOCAoamVzc2llKSAoRU9MKSIsICJvcyI6ICJkZWJpYW4ifSwgImZvY2FsIjogeyJfIjogIlVidW50dSAyMC4wNCBMVFMgKGZvY2FsKSIsICJvcyI6ICJ1YnVudHUifSwgImJpb25pYyI6IHsiXyI6ICJVYnVudHUgMTguMDQgTFRTIChiaW9uaWMpIiwgIm9zIjogInVidW50dSJ9LCAieGVuaWFsIjogeyJfIjogIlVidW50dSAxNi4wNCBMVFMgKHhlbmlhbCkgKEVPTCkiLCAib3MiOiAidWJ1bnR1In19fX0sICJuYW1lIjogImdpdGxhYi1ydW5uZXIifQ==</script>
+</div>
+
 {% endraw %}
 
-<p></p>
-
-<pre>
-<code id="content-4" class="language-bash" data-template="#template-4" data-select="#http-select,#sudo-select">
-</code>
-</pre>
-
-
+<script src="/static/js/mustache.js?{{ site.data['hash'] }}"></script>
+<script src="/static/js/zdocs.js?{{ site.data['hash'] }}"></script>

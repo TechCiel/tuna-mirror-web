@@ -4,61 +4,40 @@ layout: help
 mirrorid: raspberrypi
 ---
 
-<!-- 本 markdown 从 mirrorz-org/mirrorz-help 自动生成，如需修改，请修改 mirrorz-org/mirrorz-help 的对应部分 -->
+<!-- 本 markdown 从 tuna/mirrorz-help-ng 自动生成，如需修改，请修改其对应部分 -->
 
-# Raspberrypi 软件仓库镜像使用帮助
+<style>.z-help tmpl { display: none }</style>
 
-<form class="form-inline">
-<div class="form-group">
-	<label>是否使用 HTTPS</label>
-	<select id="http-select" class="form-control content-select" data-target="#content-0">
-	  <option data-http_protocol="https://" selected>是</option>
-	  <option data-http_protocol="http://">否</option>
-	</select>
+<div class="z-wrap">
+    <form class="z-form z-global" onchange="form_update(null)" onsubmit="return false">
+        <div>
+            <label for="e0a5cecb">线路选择</label>
+            <select id="e0a5cecb" name="host">
+                <option selected="selected" value="{{ site.url }}">自动</option>
+                <option value="{{ site.urlv4 }}">IPv4</option>
+                <option value="{{ site.urlv6 }}">IPv6</option>
+            </select>
+        </div>
+        <div>
+            <input id="144d763c" name="_scheme" type="checkbox" checked>
+            <label for="144d763c">是否使用 HTTPS</label>
+        </div>
+        <div>
+            <input id="4659e7da" name="_sudo" type="checkbox">
+            <label for="4659e7da">是否使用 sudo</label>
+        </div>
+    </form>
 </div>
-</form>
-
-
-<form class="form-inline">
-<div class="form-group">
-	<label>是否使用 sudo</label>
-	<select id="sudo-select" class="form-control content-select" data-target="#content-0">
-	  <option data-sudo="sudo " data-sudoE="sudo -E " selected>是</option>
-	  <option data-sudo="" data-sudoE="">否</option>
-	</select>
-</div>
-</form>
-
-
-
-主要参考 [Raspbian 帮助](/help/raspbian)
-
-编辑 `/etc/apt/sources.list.d/raspi.list` 文件。
-
-
-
-<form class="form-inline">
-<div class="form-group">
-  <label>选择你的 Raspbian 对应的 Debian 版本：</label>
-    <select id="select-0-0" class="form-control content-select" data-target="#content-0">
-      <option data-release_name="bullseye" selected>Debian 11 (bullseye)</option>
-      <option data-release_name="buster">Debian 10 (buster)</option>
-      <option data-release_name="stretch">Debian 9 (stretch)</option>
-    </select>
-</div>
-</form>
-
 {% raw %}
-<script id="template-0" type="x-tmpl-markup">
-deb {{http_protocol}}{{mirror}}/ {{release_name}} main
-</script>
+<div class="z-help"><h1>Raspberrypi 软件仓库</h1>
+<p>主要参考 <a href="../raspbian/">Raspbian 帮助</a></p>
+<p>编辑 <code>/etc/apt/sources.list.d/raspi.list</code> 文件。</p>
+<div class="z-wrap"><form class="z-form" onchange="form_update(event)" onsubmit="return false"><div><label for="bbc47397" title>选择你的 Raspbian 对应的 Debian 版本</label><select id="bbc47397" name="release" title><option value="bullseye">Debian 11 (bullseye)</option><option value="buster">Debian 10 (buster)</option><option value="stretch">Debian 9 (stretch) (EOL)</option></select></div></form><pre class="z-code"></pre></div><tmpl z-input="release" z-path="/etc/apt/sources.list.d/raspi.list">
+deb {{endpoint}}/ {{release}} main
+</tmpl><script id="z-config" type="application/x-mirrorz-help">eyJfIjogIlJhc3BiZXJyeXBpIFx1OGY2Zlx1NGVmNlx1NGVkM1x1NWU5MyIsICJibG9jayI6IFsicmFzcGJlcnJ5cGkiXSwgImlucHV0IjogeyJyZWxlYXNlIjogeyJfIjogIlx1OTAwOVx1NjJlOVx1NGY2MFx1NzY4NCBSYXNwYmlhbiBcdTViZjlcdTVlOTRcdTc2ODQgRGViaWFuIFx1NzI0OFx1NjcyYyIsICJvcHRpb24iOiB7ImJ1bGxzZXllIjogeyJfIjogIkRlYmlhbiAxMSAoYnVsbHNleWUpIn0sICJidXN0ZXIiOiB7Il8iOiAiRGViaWFuIDEwIChidXN0ZXIpIn0sICJzdHJldGNoIjogeyJfIjogIkRlYmlhbiA5IChzdHJldGNoKSAoRU9MKSJ9fX19LCAibmFtZSI6ICJyYXNwYmVycnlwaSJ9</script>
+</div>
+
 {% endraw %}
 
-<p></p>
-
-<pre>
-<code id="content-0" class="language-properties" data-template="#template-0" data-select="#http-select,#sudo-select,#select-0-0">
-</code>
-</pre>
-
-
+<script src="/static/js/mustache.js?{{ site.data['hash'] }}"></script>
+<script src="/static/js/zdocs.js?{{ site.data['hash'] }}"></script>
